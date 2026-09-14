@@ -1,0 +1,26 @@
+ai-bridge/services/commit-message.test.js
+  s_75f48a5ccc209c::t_7f708f7be11c3a 37-39,42
+ai-bridge/services/prompt-enhancer.js
+  s_75f48a5ccc209c::t_769d66764ed13c 485,488-494,497-500
+  s_75f48a5ccc209c::t_465eb6ac980fab 468-475
+ai-bridge/services/commit-message.js
+  s_75f48a5ccc209c::t_eb8ca5f7412d2e 125,127-128,134
+  s_75f48a5ccc209c::t_bc4a5d06e807aa 174,177-183,186-189,192
+  s_75f48a5ccc209c::t_eed6c895aebe9e 156-163
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "461880f8085bb43bf1656fa3e01934944dba2383",
+  "prompts": {},
+  "sessions": {
+    "s_75f48a5ccc209c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "11ce67bd-b461-4337-80c9-f9cf576dbaea",
+        "model": "deepseek-v4.1-flash"
+      },
+      "human_author": "任世杨 <352268836@qq.com>"
+    }
+  }
+}
