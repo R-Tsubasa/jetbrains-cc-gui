@@ -1,0 +1,26 @@
+ai-bridge/services/session-title-service.js
+  s_75f48a5ccc209c::t_fd83a4c5adeca9 200-202,208
+  s_75f48a5ccc209c::t_3e35ff4c3da07e 235
+  s_75f48a5ccc209c::t_fec7b3bdd70357 218,221
+  s_75f48a5ccc209c::t_2a98c60ec25139 155,158,164-170
+  s_75f48a5ccc209c::t_847725a9860e77 376
+  s_75f48a5ccc209c::t_56f92c3aa60106 171
+ai-bridge/services/session-title-service.test.js
+  s_75f48a5ccc209c::t_ca6798636c1764 10-12,16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "2fc6c587f417ab0e6c63dd13c9dff1ae8fa29b30",
+  "prompts": {},
+  "sessions": {
+    "s_75f48a5ccc209c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "11ce67bd-b461-4337-80c9-f9cf576dbaea",
+        "model": "deepseek-v4.1-flash"
+      },
+      "human_author": "任世杨 <352268836@qq.com>"
+    }
+  }
+}
