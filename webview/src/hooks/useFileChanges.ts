@@ -49,6 +49,36 @@ function getDiffCacheKey(oldString: string, newString: string): string {
 }
 
 /**
+ * Content fingerprint of a single edit operation, used to recognise an operation
+ * the user has already acknowledged via Keep All (see useFileChangesManagement).
+ *
+ * Deliberately content-based rather than position-based: a session's transcript
+ * is rebuilt from the backend on every reload and is not isomorphic to the
+ * live-assembled array (the reloaded history can carry messages after the one
+ * that was last at Keep All time), so no message index or message identity can
+ * mark "everything up to here" reliably.
+ */
+export function editOperationKey(op: {
+  filePath: string;
+  toolName: string;
+  oldString: string;
+  newString: string;
+  replaceAll?: boolean;
+}): string {
+  const file = op.filePath ?? '';
+  const tool = op.toolName ?? '';
+  const oldString = op.oldString ?? '';
+  const newString = op.newString ?? '';
+  return [
+    file.length, hashString(file),
+    tool.length, hashString(tool),
+    oldString.length, hashString(oldString),
+    newString.length, hashString(newString),
+    op.replaceAll ? '1' : '0',
+  ].join(':');
+}
+
+/**
  * Compute diff statistics (additions and deletions count).
  * Small snippets use LCS; large ones use multiset estimation.
  * Used for per-operation metadata; file-level StatusPanel stats use the session ledger.
@@ -333,8 +363,8 @@ interface UseFileChangesParams {
   messages: ClaudeMessage[];
   getContentBlocks: (message: ClaudeMessage) => ClaudeContentBlock[];
   findToolResult: (toolUseId?: string, messageIndex?: number) => ToolResultBlock | null;
-  /** Start processing messages from this index (for Keep All feature) */
-  startFromIndex?: number;
+  /** Fingerprints of operations already acknowledged via Keep All — excluded from the ledger */
+  confirmedEditKeys?: Set<string>;
   /** Background agent sidechain transcripts — their Edit/Write tools must also count */
   subagentHistories?: Record<string, SubagentHistoryResponse>;
   /** Current chat tab session id — for cross-tab multi-agent marks */
@@ -389,18 +419,18 @@ export function useFileChanges({
   messages,
   getContentBlocks,
   findToolResult,
-  startFromIndex = 0,
+  confirmedEditKeys,
   subagentHistories,
   currentSessionId = null,
 }: UseFileChangesParams): FileChangeSummary[] {
+  // Two-stage memo (inputs → ops → summaries) with structural caching so that
+  // streaming text updates do not rebuild the ledger.
   const cache = useMemo(() => ({ inputs: [] as FileToolInput[], ops: [] as LedgerOp[] }),
-    [currentSessionId, startFromIndex]);
+    [currentSessionId]);
   const inputs = useMemo(() => {
     const collected: FileToolInput[] = [];
-    const agentKeysAfterBase = new Set<string>();
 
     messages.forEach((message, messageIndex) => {
-      if (messageIndex < startFromIndex) return;
       if (message.type !== 'assistant') return;
 
       const blocks = getContentBlocks(message);
@@ -411,10 +441,6 @@ export function useFileChanges({
 
         const rawName = block.name ?? '';
         const toolName = normalizeToolName(rawName);
-
-        if (isToolName(toolName, AGENT_TOOL_NAMES) && block.id) {
-          agentKeysAfterBase.add(block.id);
-        }
 
         if (!isToolName(toolName, FILE_MODIFY_TOOL_NAMES)) return;
 
@@ -438,14 +464,7 @@ export function useFileChanges({
     });
 
     if (subagentHistories && Object.keys(subagentHistories).length > 0) {
-      const allowedKeys = startFromIndex > 0 ? agentKeysAfterBase : null;
-      collectFromSubagentHistories(
-        collected,
-        subagentHistories,
-        allowedKeys && allowedKeys.size > 0
-          ? allowedKeys
-          : (startFromIndex > 0 ? agentKeysAfterBase : null),
-      );
+      collectFromSubagentHistories(collected, subagentHistories, null);
     }
 
     const unique = new Map<string | FileToolInput, FileToolInput>();
@@ -464,7 +483,7 @@ export function useFileChanges({
       cache.inputs = next;
     }
     return cache.inputs;
-  }, [messages, getContentBlocks, findToolResult, startFromIndex, subagentHistories, cache]);
+  }, [messages, getContentBlocks, findToolResult, subagentHistories, cache]);
 
   const ops = useMemo(() => {
     const next: LedgerOp[] = [];
@@ -474,10 +493,15 @@ export function useFileChanges({
   }, [inputs, cache]);
 
   const base = useMemo(() => {
-    const entries = buildSessionFileLedger(ops);
+    // Operations the user already acknowledged via Keep All are dropped before
+    // the ledger is built, so the baseline for what remains is that moment.
+    const visibleOps = confirmedEditKeys && confirmedEditKeys.size > 0
+      ? ops.filter((op) => !confirmedEditKeys.has(editOperationKey(op)))
+      : ops;
+    const entries = buildSessionFileLedger(visibleOps);
     const summaries = ledgerEntriesToSummaries(entries);
     return { summaries };
-  }, [ops]);
+  }, [ops, confirmedEditKeys]);
 
   const [enriched, setEnriched] = useState<FileChangeSummary[]>(base.summaries);
   const recorded = useRef({
