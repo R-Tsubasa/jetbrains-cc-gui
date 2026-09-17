@@ -1,0 +1,35 @@
+webview/src/utils/messageUtils.ts
+  s_a3546cd545058f::t_ec1564439698d5 72-79
+webview/src/hooks/useFileChangesManagement.test.ts
+  s_a3546cd545058f::t_cbd2e424d1f1bd 6-11,68,72-73,88-110,115,117-122,124,128-129,196-209
+  s_a3546cd545058f::t_c2b7edec66407d 136-144,149,152,194-195
+  s_a3546cd545058f::t_b58afad16e4efa 12,14-30,44-48,54,64-67,87,111-114,116,123,125-127,130-135,145-148,150-151,153-193,210-219
+  s_a3546cd545058f::t_e318fa3d00c347 13
+webview/src/hooks/useFileChangesManagement.ts
+  s_a3546cd545058f::t_54a637f35c2503 4,13-19,21-42
+  s_a3546cd545058f::t_e47b6940f6592a 184-185,187-190,199-202
+  s_a3546cd545058f::t_a587794f2b68ca 182,186,191-192,198,203-206
+  s_a3546cd545058f::t_f4e999abdb8f34 1,7-12,20,43
+  s_a3546cd545058f::t_b8ef378ed9e29e 297-298,300-301,305,311
+  s_a3546cd545058f::t_20712201b1fb24 85-86,108-109
+  s_a3546cd545058f::t_f2ab37d5be1559 262,270-272
+  s_a3546cd545058f::t_ef3f566422e8e0 302-304
+  s_a3546cd545058f::t_d07f715221d402 69-74,83-84,87-107
+  s_a3546cd545058f::t_e4546b454b5fc1 44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "c95f3b1742a39c7ae8c565c1f39fa72898f66f1c",
+  "prompts": {},
+  "sessions": {
+    "s_a3546cd545058f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d289e796-95bd-4f4d-ba62-dc1f9cc62657",
+        "model": "deepseek-v4.1-flash"
+      },
+      "human_author": "任世杨 <352268836@qq.com>"
+    }
+  }
+}
