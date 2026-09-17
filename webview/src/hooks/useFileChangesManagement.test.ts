@@ -19,41 +19,124 @@ function makeOptions(messages: ClaudeMessage[], sessionId: string | null) {
   };
 }
 
-describe('useFileChangesManagement > handleKeepAll', () => {
+function readStored(sessionId: string): string[] | null {
+  const raw = localStorage.getItem(`confirmed-edits-${sessionId}`);
+  return raw ? JSON.parse(raw) : null;
+}
+
+describe('useFileChangesManagement > confirmEdits (Keep All)', () => {
   afterEach(() => {
     localStorage.clear();
   });
 
-  it('sets baseMessageIndex to the current messages length and persists it', () => {
+  it('acknowledges operations and persists them for the session', () => {
     const { result } = renderHook((props) => useFileChangesManagement(props), {
-      initialProps: makeOptions(makeMessages(3), 'session-1'),
+      initialProps: makeOptions([], 'session-1'),
     });
 
     act(() => {
-      result.current.handleKeepAll();
+      result.current.confirmEdits(['op-a', 'op-b']);
     });
 
-    expect(result.current.baseMessageIndex).toBe(3);
-    expect(localStorage.getItem('keep-all-base-session-1')).toBe('3');
+    expect([...result.current.confirmedEditKeys].sort()).toEqual(['op-a', 'op-b']);
+    expect(readStored('session-1')?.slice().sort()).toEqual(['op-a', 'op-b']);
   });
 
-  // Regression for #1456: a handleKeepAll reference captured before messages grow
-  // must still read the LATEST length (ref-based), not the stale captured value.
-  it('reads the latest messages length even from a stale callback reference', () => {
-    const { result, rerender } = renderHook((props) => useFileChangesManagement(props), {
-      initialProps: makeOptions(makeMessages(3), 'session-1'),
+  it('accumulates across calls without duplicating', () => {
+    const { result } = renderHook((props) => useFileChangesManagement(props), {
+      initialProps: makeOptions([], 'session-1'),
     });
-
-    // Capture the callback while messages.length === 3, then grow messages.
-    const staleKeepAll = result.current.handleKeepAll;
-    rerender(makeOptions(makeMessages(7), 'session-1'));
 
     act(() => {
-      staleKeepAll();
+      result.current.confirmEdits(['op-a']);
+    });
+    act(() => {
+      result.current.confirmEdits(['op-a', 'op-b']);
     });
 
-    expect(result.current.baseMessageIndex).toBe(7);
-    expect(localStorage.getItem('keep-all-base-session-1')).toBe('7');
+    expect([...result.current.confirmedEditKeys].sort()).toEqual(['op-a', 'op-b']);
+    expect(readStored('session-1')?.slice().sort()).toEqual(['op-a', 'op-b']);
+  });
+
+  // The reported regression, end to end: Keep All in one session, start a new
+  // session, then reopen the first one from history — nothing kept may return.
+  it('restores the acknowledgements when the session is reopened', () => {
+    const { result: first } = renderHook((props) => useFileChangesManagement(props), {
+      initialProps: makeOptions([], 'session-A'),
+    });
+
+    act(() => {
+      first.current.confirmEdits(['op-a']);
+    });
+
+    const { result: other } = renderHook((props) => useFileChangesManagement(props), {
+      initialProps: makeOptions([], 'session-B'),
+    });
+    expect(other.current.confirmedEditKeys.size).toBe(0);
+
+    const { result: reopened } = renderHook((props) => useFileChangesManagement(props), {
+      initialProps: makeOptions([], 'session-A'),
+    });
+    expect([...reopened.current.confirmedEditKeys]).toEqual(['op-a']);
+  });
+
+  it('clears the acknowledgements when switching to a session that has none', () => {
+    const { result, rerender } = renderHook((props) => useFileChangesManagement(props), {
+      initialProps: makeOptions([], 'session-A'),
+    });
+
+    act(() => {
+      result.current.confirmEdits(['op-a']);
+    });
+    expect(result.current.confirmedEditKeys.size).toBe(1);
+
+    rerender(makeOptions([], 'session-B'));
+
+    expect(result.current.confirmedEditKeys.size).toBe(0);
+  });
+
+  it('flushes the acknowledgements once the session id arrives', () => {
+    const { result, rerender } = renderHook((props) => useFileChangesManagement(props), {
+      initialProps: makeOptions([], null),
+    });
+
+    // A brand-new session has no id until the backend reports one.
+    act(() => {
+      result.current.confirmEdits(['op-a']);
+    });
+    expect(readStored('session-late')).toBeNull();
+    // The in-memory effect is immediate regardless.
+    expect(result.current.confirmedEditKeys.size).toBe(1);
+
+    // window.setSessionId updates both the ref and the state.
+    const adopted = makeOptions([], 'session-late');
+    adopted.currentSessionIdRef.current = 'session-late';
+    rerender(adopted);
+
+    expect(readStored('session-late')).toEqual(['op-a']);
+    expect([...result.current.confirmedEditKeys]).toEqual(['op-a']);
+  });
+
+  it('ignores a malformed persisted list', () => {
+    localStorage.setItem('confirmed-edits-session-1', '{"not":"a list"}');
+
+    const { result } = renderHook((props) => useFileChangesManagement(props), {
+      initialProps: makeOptions([], 'session-1'),
+    });
+
+    expect(result.current.confirmedEditKeys.size).toBe(0);
+  });
+
+  it('drops superseded position-based baselines from earlier releases', () => {
+    localStorage.setItem('keep-all-base-session-1', '3');
+    localStorage.setItem('keep-all-anchor-session-1', '{"aliases":[],"index":0}');
+
+    renderHook((props) => useFileChangesManagement(props), {
+      initialProps: makeOptions([], 'session-1'),
+    });
+
+    expect(localStorage.getItem('keep-all-base-session-1')).toBeNull();
+    expect(localStorage.getItem('keep-all-anchor-session-1')).toBeNull();
   });
 });
 
@@ -111,7 +194,6 @@ describe('Codex review checkpoints', () => {
       { filePath: '/two.ts', operations: [{ ledgerKey: 'second' }] }];
     act(() => result.current.handleKeepAll());
     expect(result.current.ignoredLedgerKeys).toEqual(['first', 'next', 'second']);
-    expect(result.current.baseMessageIndex).toBe(0);
     unmount();
     const restored = renderHook(() => useFileChangesManagement(options));
     expect(restored.result.current.ignoredLedgerKeys).toEqual(['first', 'next', 'second']);
@@ -138,7 +220,7 @@ describe('Codex review checkpoints', () => {
     rerender({ ...makeOptions([], 'other'), currentProvider: 'codex' });
     expect(result.current.ignoredLedgerKeys).toEqual([]);
     rerender({ ...makeOptions([], null), currentProvider: 'codex' });
-    expect(result.current.baseMessageIndex).toBe(0);
+    expect(result.current.ignoredLedgerKeys).toEqual([]);
   });
 });
 
@@ -156,12 +238,10 @@ describe('Claude review compatibility', () => {
     expect(restored.result.current.processedFiles).toEqual(['/one.ts', '/two.ts']);
     act(() => restored.result.current.handleKeepAll());
     expect(restored.result.current.processedFiles).toEqual([]);
-    expect(restored.result.current.baseMessageIndex).toBe(3);
     restored.unmount();
     const reloaded = renderHook(props => useFileChangesManagement(props), { initialProps: options });
-    expect(reloaded.result.current.baseMessageIndex).toBe(3);
     reloaded.rerender(makeOptions([], 'claude-two'));
-    expect(reloaded.result.current.baseMessageIndex).toBe(0);
+    expect(reloaded.result.current.processedFiles).toEqual([]);
   });
 
   it('only marks successful Diff actions and tolerates incomplete callbacks', () => {
