@@ -1,0 +1,31 @@
+webview/src/hooks/useFileChanges.ts
+  s_a3546cd545058f::t_bfd8bd108c18a9 60-66
+webview/src/hooks/useFileChangesManagement.ts
+  s_a3546cd545058f::t_5e6e997786a270 182-185,189
+  s_a3546cd545058f::t_12fcea8fae2faf 96-101
+  s_a3546cd545058f::t_2c6a607bb3a2ec 41-68
+  s_a3546cd545058f::t_99e938f80938b0 76
+  s_a3546cd545058f::t_847b5b1d2cd0a8 259-266,269-270,272-276,279,281-282
+webview/src/hooks/useFileChangesManagement.test.ts
+  s_a3546cd545058f::t_08e62fbe6b5f1d 6,11
+  s_a3546cd545058f::t_603a78faa37762 100-129,131,133,144-146,154-174,176
+  s_a3546cd545058f::t_09db8afcc9b209 175
+  s_a3546cd545058f::t_0441895faeba49 17-23
+  s_a3546cd545058f::t_a9b7ae5f1d715e 177
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "41bcf88ed818760772ddbd491d3e1f399b96f751",
+  "prompts": {},
+  "sessions": {
+    "s_a3546cd545058f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d289e796-95bd-4f4d-ba62-dc1f9cc62657",
+        "model": "mimo-v2.6-pro"
+      },
+      "human_author": "任世杨 <352268836@qq.com>"
+    }
+  }
+}

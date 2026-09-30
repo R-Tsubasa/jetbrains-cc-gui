@@ -1,0 +1,51 @@
+webview/src/hooks/useFileChanges.ts
+  s_a3546cd545058f::t_af071a5339dfa2 422,496-500,501
+  s_a3546cd545058f::t_fe6ffc34cbcd67 52-80
+  s_a3546cd545058f::t_a0a03116f4b790 51
+  s_a3546cd545058f::t_1701bfc2a57d00 366-367
+webview/src/hooks/useFileChanges.test.ts
+  s_a3546cd545058f::t_3853203a4470b7 8
+  s_a3546cd545058f::t_23222e6f774da9 928,948-968,973-1022,1026
+webview/src/hooks/useChatComputations.ts
+  s_a3546cd545058f::t_784e8446521752 252,268-269,271-281
+  s_a3546cd545058f::t_be9efc2ded2cec 263-267,270,282
+  s_a3546cd545058f::t_03315f8b093119 283
+  s_a3546cd545058f::t_60d5cebded31bd 407
+  s_a3546cd545058f::t_4d9ba5d848b676 32
+webview/src/hooks/useFileChangesManagement.ts
+  s_a3546cd545058f::t_3e5eed1db416ab 225-242
+  s_a3546cd545058f::t_54a637f35c2503 13
+  s_a3546cd545058f::t_f15b58044dd6bb 163,174-175,177-179
+  s_a3546cd545058f::t_c6bc5b4e9a20df 4
+  s_a3546cd545058f::t_88317ff00a4672 15
+  s_a3546cd545058f::t_e53bbfe59bd895 64-66
+  s_a3546cd545058f::t_f4e999abdb8f34 1,7,11
+  s_a3546cd545058f::t_630f6596e21d35 5-6,8-10,12,14,30-40,42-43,51-59,61-63,67-68,142-144,148-162,164-165,167-170,180,245-246,255-259,262,268-277,279,281-283,290-296,305,308
+webview/src/components/ChatScreen.tsx
+  s_a3546cd545058f::t_8d9c66d7a74502 77
+webview/src/useAppChatController.ts
+  s_a3546cd545058f::t_6068bee19df07f 344,352
+webview/src/hooks/useFileChangesManagement.test.ts
+  s_a3546cd545058f::t_7d33a855898302 6,11,17-18,22,27-40,42,46,49,52-53,56-60,64,67-68,70,72-73,75,78,80,84,86,88,90,95,97,100,111,115-116,118-119,122,125-127,129-130,133-134
+  s_a3546cd545058f::t_e3ff35ede3081f 93,98,102-109,112
+  s_a3546cd545058f::t_b58afad16e4efa 19-21,81-83,91-92,94,96,101,123-124,128
+  s_a3546cd545058f::t_cbd2e424d1f1bd 47-48,50-51,54-55,61-63,65-66,114,117,120-121
+  s_a3546cd545058f::t_dbdf747d03eb72 110
+  s_a3546cd545058f::t_c2b7edec66407d 74,113
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "658420a4a4f7cea35eeb60f399cab3730531ef40",
+  "prompts": {},
+  "sessions": {
+    "s_a3546cd545058f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d289e796-95bd-4f4d-ba62-dc1f9cc62657",
+        "model": "unknown"
+      },
+      "human_author": null
+    }
+  }
+}
