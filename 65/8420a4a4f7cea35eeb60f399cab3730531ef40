@@ -3,9 +3,14 @@ webview/src/hooks/useFileChanges.ts
   s_a3546cd545058f::t_fe6ffc34cbcd67 52-80
   s_a3546cd545058f::t_a0a03116f4b790 51
   s_a3546cd545058f::t_1701bfc2a57d00 366-367
+  s_a3546cd545058f::t_228cff29b56a7d 426-427,429
+  s_a3546cd545058f::t_5b59444035406f 467,486,504
 webview/src/hooks/useFileChanges.test.ts
   s_a3546cd545058f::t_3853203a4470b7 8
   s_a3546cd545058f::t_23222e6f774da9 928,948-968,973-1022,1026
+  s_a3546cd545058f::t_c0a7281ce864ca 20-21
+  s_a3546cd545058f::t_456e0f6eac0a1a 213-222
+  s_a3546cd545058f::t_c012e1c29b4dce 115-124
 webview/src/hooks/useChatComputations.ts
   s_a3546cd545058f::t_784e8446521752 252,268-269,271-281
   s_a3546cd545058f::t_be9efc2ded2cec 263-267,270,282
