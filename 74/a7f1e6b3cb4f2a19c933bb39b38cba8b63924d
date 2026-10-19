@@ -1,0 +1,29 @@
+webview/src/hooks/useFileChanges.ts
+  s_a3546cd545058f::t_bfd8bd108c18a9 63-69
+webview/src/hooks/useFileChangesManagement.ts
+  s_a3546cd545058f::t_5e6e997786a270 229-232,236
+  s_a3546cd545058f::t_2c6a607bb3a2ec 48-75
+  s_a3546cd545058f::t_99e938f80938b0 83
+  s_a3546cd545058f::t_847b5b1d2cd0a8 334-341,344-345,348-349,352,354-355
+webview/src/hooks/useFileChangesManagement.test.ts
+  s_a3546cd545058f::t_08e62fbe6b5f1d 16
+  s_a3546cd545058f::t_603a78faa37762 98-104,106-118,120-127,129,142-143,152-156,158-167,169-172,174
+  s_a3546cd545058f::t_09db8afcc9b209 173
+  s_a3546cd545058f::t_a9b7ae5f1d715e 175
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "74a7f1e6b3cb4f2a19c933bb39b38cba8b63924d",
+  "prompts": {},
+  "sessions": {
+    "s_a3546cd545058f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d289e796-95bd-4f4d-ba62-dc1f9cc62657",
+        "model": "mimo-v2.6-pro"
+      },
+      "human_author": "任世杨 <352268836@qq.com>"
+    }
+  }
+}

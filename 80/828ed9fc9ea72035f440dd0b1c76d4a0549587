@@ -1,0 +1,48 @@
+webview/src/hooks/useFileChanges.ts
+  s_a3546cd545058f::t_af071a5339dfa2 438,514-518,519
+  s_a3546cd545058f::t_fe6ffc34cbcd67 55-83
+  s_a3546cd545058f::t_a0a03116f4b790 54
+  s_a3546cd545058f::t_1701bfc2a57d00 381-382
+  s_a3546cd545058f::t_228cff29b56a7d 442-443,445
+  s_a3546cd545058f::t_5b59444035406f 483,502,522
+webview/src/hooks/useFileChanges.test.ts
+  s_a3546cd545058f::t_3853203a4470b7 8
+  s_a3546cd545058f::t_23222e6f774da9 955,975-995,1000-1049,1053
+  s_a3546cd545058f::t_c0a7281ce864ca 20-21
+  s_a3546cd545058f::t_456e0f6eac0a1a 240-249
+  s_a3546cd545058f::t_c012e1c29b4dce 142-151
+webview/src/hooks/useChatComputations.ts
+  s_a3546cd545058f::t_784e8446521752 257
+webview/src/hooks/useFileChangesManagement.ts
+  s_a3546cd545058f::t_3e5eed1db416ab 307-324
+  s_a3546cd545058f::t_54a637f35c2503 14
+  s_a3546cd545058f::t_f15b58044dd6bb 217,228-229,231-233
+  s_a3546cd545058f::t_c6bc5b4e9a20df 5
+  s_a3546cd545058f::t_88317ff00a4672 16
+  s_a3546cd545058f::t_e53bbfe59bd895 100-102
+  s_a3546cd545058f::t_f4e999abdb8f34 1,8,12
+  s_a3546cd545058f::t_630f6596e21d35 6-7,9-11,13,15,40,43-47,49-50,79-87,97-99,103-104,196-198,202-216,218-219,221-224,234,329-330,345-349,352,358-367,384,388
+webview/src/hooks/useFileChangesManagement.test.ts
+  s_a3546cd545058f::t_7d33a855898302 22-23,27,32-33,35-45,51,54,57-58,61-64,69,72,75,77,80,83,89,91,95,102,105,116,120-121,123,127,130-132,134,138-139
+  s_a3546cd545058f::t_e3ff35ede3081f 98,103,107-111,113-114,117
+  s_a3546cd545058f::t_b58afad16e4efa 24-26,86-88,96-97,99,101,106,128-129,133
+  s_a3546cd545058f::t_cbd2e424d1f1bd 52-53,55-56,59-60,66-68,70-71,119,122,125-126
+  s_a3546cd545058f::t_dbdf747d03eb72 115
+  s_a3546cd545058f::t_c2b7edec66407d 79,118
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "80828ed9fc9ea72035f440dd0b1c76d4a0549587",
+  "prompts": {},
+  "sessions": {
+    "s_a3546cd545058f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d289e796-95bd-4f4d-ba62-dc1f9cc62657",
+        "model": "unknown"
+      },
+      "human_author": null
+    }
+  }
+}
