@@ -5,11 +5,17 @@ webview/src/hooks/useFileChangesManagement.ts
   s_a3546cd545058f::t_2c6a607bb3a2ec 48-75
   s_a3546cd545058f::t_99e938f80938b0 83
   s_a3546cd545058f::t_847b5b1d2cd0a8 334-341,344-345,348-349,352,354-355
+  s_d32e730316053d::t_eb6af1d4c1c029 347
 webview/src/hooks/useFileChangesManagement.test.ts
   s_a3546cd545058f::t_08e62fbe6b5f1d 16
   s_a3546cd545058f::t_603a78faa37762 98-104,106-118,120-127,129,142-143,152-156,158-167,169-172,174
   s_a3546cd545058f::t_09db8afcc9b209 173
   s_a3546cd545058f::t_a9b7ae5f1d715e 175
+  s_d32e730316053d::t_bdec9420cb7ce9 168
+  s_d32e730316053d::t_5b30c8b194f0e0 105,119
+  s_d32e730316053d::t_570665e8ed8417 131
+  s_d32e730316053d::t_d3404a8e794527 157
+  s_d32e730316053d::t_c57b85c3a851d1 144
 ---
 {
   "schema_version": "authorship/3.0.0",
@@ -22,6 +28,14 @@ webview/src/hooks/useFileChangesManagement.test.ts
         "tool": "claude",
         "id": "d289e796-95bd-4f4d-ba62-dc1f9cc62657",
         "model": "mimo-v2.6-pro"
+      },
+      "human_author": "任世杨 <352268836@qq.com>"
+    },
+    "s_d32e730316053d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f5c35fb5-d3c7-4f3e-811b-4f629e1cbcef",
+        "model": "deepseek-v4.1-flash"
       },
       "human_author": "任世杨 <352268836@qq.com>"
     }
